@@ -1,0 +1,7 @@
+syntax = "proto3";
+package zyx.bridge;
+
+option go_package = "zyx/x/bridge/types";
+
+// Msg defines the Msg service.
+service Msg {}
