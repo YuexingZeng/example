@@ -1,26 +1,58 @@
 syntax = "proto3";
+
 package zyx.bridge;
 
 import "gogoproto/gogo.proto";
 import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
 import "zyx/bridge/params.proto";
+import "zyx/bridge/caller.proto";
 
 option go_package = "zyx/x/bridge/types";
 
 // Query defines the gRPC querier service.
 service Query {
+  
   // Parameters queries the parameters of the module.
-  rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
+  rpc Params (QueryParamsRequest) returns (QueryParamsResponse) {
     option (google.api.http).get = "/zyx/bridge/params";
+  
+  }
+  
+  // Queries a list of Caller items.
+  rpc Caller    (QueryGetCallerRequest) returns (QueryGetCallerResponse) {
+    option (google.api.http).get = "/zyx/bridge/caller/{id}";
+  
+  }
+  rpc CallerAll (QueryAllCallerRequest) returns (QueryAllCallerResponse) {
+    option (google.api.http).get = "/zyx/bridge/caller";
+  
   }
 }
-
 // QueryParamsRequest is request type for the Query/Params RPC method.
 message QueryParamsRequest {}
 
 // QueryParamsResponse is response type for the Query/Params RPC method.
 message QueryParamsResponse {
+  
   // params holds all the parameters of this module.
   Params params = 1 [(gogoproto.nullable) = false];
 }
+
+message QueryGetCallerRequest {
+  uint64 id = 1;
+}
+
+message QueryGetCallerResponse {
+  Caller Caller = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllCallerRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllCallerResponse {
+  repeated Caller                                 Caller     = 1 [(gogoproto.nullable) = false];
+           cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+

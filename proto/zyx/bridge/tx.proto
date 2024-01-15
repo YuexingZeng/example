@@ -1,7 +1,38 @@
 syntax = "proto3";
+
 package zyx.bridge;
+
+import "zyx/bridge/caller.proto";
 
 option go_package = "zyx/x/bridge/types";
 
 // Msg defines the Msg service.
-service Msg {}
+service Msg {
+  rpc CreateCaller (MsgCreateCaller) returns (MsgCreateCallerResponse);
+  rpc UpdateCaller (MsgUpdateCaller) returns (MsgUpdateCallerResponse);
+  rpc DeleteCaller (MsgDeleteCaller) returns (MsgDeleteCallerResponse);
+}
+message MsgCreateCaller {
+  string creator = 1;
+  string address = 2;
+}
+
+message MsgCreateCallerResponse {
+  uint64 id = 1;
+}
+
+message MsgUpdateCaller {
+  string creator = 1;
+  uint64 id      = 2;
+  string address = 3;
+}
+
+message MsgUpdateCallerResponse {}
+
+message MsgDeleteCaller {
+  string creator = 1;
+  uint64 id      = 2;
+}
+
+message MsgDeleteCallerResponse {}
+
