@@ -1,0 +1,12 @@
+syntax = "proto3";
+package zyx.test;
+
+import "gogoproto/gogo.proto";
+import "zyx/test/params.proto";
+
+option go_package = "zyx/x/test/types";
+
+// GenesisState defines the test module's genesis state.
+message GenesisState {
+  Params params = 1 [(gogoproto.nullable) = false];
+}

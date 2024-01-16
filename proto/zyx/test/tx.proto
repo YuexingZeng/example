@@ -1,0 +1,7 @@
+syntax = "proto3";
+package zyx.test;
+
+option go_package = "zyx/x/test/types";
+
+// Msg defines the Msg service.
+service Msg {}
