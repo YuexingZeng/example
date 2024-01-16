@@ -5,13 +5,15 @@ package zyx.bridge;
 import "gogoproto/gogo.proto";
 import "zyx/bridge/params.proto";
 import "zyx/bridge/caller.proto";
+import "zyx/bridge/deposit.proto";
 
 option go_package = "zyx/x/bridge/types";
 
 // GenesisState defines the bridge module's genesis state.
 message GenesisState {
-           Params params      = 1 [(gogoproto.nullable) = false];
-  repeated Caller callerList  = 2 [(gogoproto.nullable) = false];
-           uint64 callerCount = 3;
+           Params  params      = 1 [(gogoproto.nullable) = false];
+  repeated Caller  callerList  = 2 [(gogoproto.nullable) = false];
+           uint64  callerCount = 3;
+  repeated Deposit depositList = 4 [(gogoproto.nullable) = false];
 }
 

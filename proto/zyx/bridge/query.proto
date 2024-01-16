@@ -7,6 +7,7 @@ import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
 import "zyx/bridge/params.proto";
 import "zyx/bridge/caller.proto";
+import "zyx/bridge/deposit.proto";
 
 option go_package = "zyx/x/bridge/types";
 
@@ -26,6 +27,16 @@ service Query {
   }
   rpc CallerAll (QueryAllCallerRequest) returns (QueryAllCallerResponse) {
     option (google.api.http).get = "/zyx/bridge/caller";
+  
+  }
+  
+  // Queries a list of Deposit items.
+  rpc Deposit    (QueryGetDepositRequest) returns (QueryGetDepositResponse) {
+    option (google.api.http).get = "/zyx/bridge/deposit/{index}";
+  
+  }
+  rpc DepositAll (QueryAllDepositRequest) returns (QueryAllDepositResponse) {
+    option (google.api.http).get = "/zyx/bridge/deposit";
   
   }
 }
@@ -53,6 +64,23 @@ message QueryAllCallerRequest {
 
 message QueryAllCallerResponse {
   repeated Caller                                 Caller     = 1 [(gogoproto.nullable) = false];
+           cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetDepositRequest {
+  string index = 1;
+}
+
+message QueryGetDepositResponse {
+  Deposit deposit = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllDepositRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllDepositResponse {
+  repeated Deposit                                deposit    = 1 [(gogoproto.nullable) = false];
            cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 

@@ -23,6 +23,14 @@ func TestGenesis(t *testing.T) {
 			},
 		},
 		CallerCount: 2,
+		DepositList: []types.Deposit{
+			{
+				Index: "0",
+			},
+			{
+				Index: "1",
+			},
+		},
 		// this line is used by starport scaffolding # genesis/test/state
 	}
 
@@ -36,5 +44,6 @@ func TestGenesis(t *testing.T) {
 
 	require.ElementsMatch(t, genesisState.CallerList, got.CallerList)
 	require.Equal(t, genesisState.CallerCount, got.CallerCount)
+	require.ElementsMatch(t, genesisState.DepositList, got.DepositList)
 	// this line is used by starport scaffolding # genesis/test/assert
 }

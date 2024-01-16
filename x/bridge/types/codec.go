@@ -11,6 +11,9 @@ func RegisterCodec(cdc *codec.LegacyAmino) {
 	cdc.RegisterConcrete(&MsgCreateCaller{}, "bridge/CreateCaller", nil)
 	cdc.RegisterConcrete(&MsgUpdateCaller{}, "bridge/UpdateCaller", nil)
 	cdc.RegisterConcrete(&MsgDeleteCaller{}, "bridge/DeleteCaller", nil)
+	cdc.RegisterConcrete(&MsgCreateDeposit{}, "bridge/CreateDeposit", nil)
+	cdc.RegisterConcrete(&MsgUpdateDeposit{}, "bridge/UpdateDeposit", nil)
+	cdc.RegisterConcrete(&MsgDeleteDeposit{}, "bridge/DeleteDeposit", nil)
 	// this line is used by starport scaffolding # 2
 }
 
@@ -19,6 +22,11 @@ func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
 		&MsgCreateCaller{},
 		&MsgUpdateCaller{},
 		&MsgDeleteCaller{},
+	)
+	registry.RegisterImplementations((*sdk.Msg)(nil),
+		&MsgCreateDeposit{},
+		&MsgUpdateDeposit{},
+		&MsgDeleteDeposit{},
 	)
 	// this line is used by starport scaffolding # 3
 
