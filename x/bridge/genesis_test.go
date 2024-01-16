@@ -31,6 +31,14 @@ func TestGenesis(t *testing.T) {
 				Index: "1",
 			},
 		},
+		WithdrawList: []types.Withdraw{
+			{
+				Index: "0",
+			},
+			{
+				Index: "1",
+			},
+		},
 		// this line is used by starport scaffolding # genesis/test/state
 	}
 
@@ -45,5 +53,6 @@ func TestGenesis(t *testing.T) {
 	require.ElementsMatch(t, genesisState.CallerList, got.CallerList)
 	require.Equal(t, genesisState.CallerCount, got.CallerCount)
 	require.ElementsMatch(t, genesisState.DepositList, got.DepositList)
+	require.ElementsMatch(t, genesisState.WithdrawList, got.WithdrawList)
 	// this line is used by starport scaffolding # genesis/test/assert
 }

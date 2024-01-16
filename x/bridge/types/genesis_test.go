@@ -39,6 +39,14 @@ func TestGenesisState_Validate(t *testing.T) {
 						Index: "1",
 					},
 				},
+				WithdrawList: []types.Withdraw{
+					{
+						Index: "0",
+					},
+					{
+						Index: "1",
+					},
+				},
 				// this line is used by starport scaffolding # types/genesis/validField
 			},
 			valid: true,
@@ -73,6 +81,20 @@ func TestGenesisState_Validate(t *testing.T) {
 			desc: "duplicated deposit",
 			genState: &types.GenesisState{
 				DepositList: []types.Deposit{
+					{
+						Index: "0",
+					},
+					{
+						Index: "0",
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "duplicated withdraw",
+			genState: &types.GenesisState{
+				WithdrawList: []types.Withdraw{
 					{
 						Index: "0",
 					},
