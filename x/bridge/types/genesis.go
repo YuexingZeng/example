@@ -13,6 +13,7 @@ func DefaultGenesis() *GenesisState {
 		CallerList:   []Caller{},
 		DepositList:  []Deposit{},
 		WithdrawList: []Withdraw{},
+		SignerList:   []Signer{},
 		// this line is used by starport scaffolding # genesis/types/default
 		Params: DefaultParams(),
 	}
@@ -52,6 +53,18 @@ func (gs GenesisState) Validate() error {
 			return fmt.Errorf("duplicated index for withdraw")
 		}
 		withdrawIndexMap[index] = struct{}{}
+	}
+	// Check for duplicated ID in signer
+	signerIdMap := make(map[uint64]bool)
+	signerCount := gs.GetSignerCount()
+	for _, elem := range gs.SignerList {
+		if _, ok := signerIdMap[elem.Id]; ok {
+			return fmt.Errorf("duplicated id for signer")
+		}
+		if elem.Id >= signerCount {
+			return fmt.Errorf("signer id should be lower or equal than the last id")
+		}
+		signerIdMap[elem.Id] = true
 	}
 	// this line is used by starport scaffolding # genesis/types/validate
 

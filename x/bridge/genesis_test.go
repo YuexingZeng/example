@@ -39,6 +39,15 @@ func TestGenesis(t *testing.T) {
 				Index: "1",
 			},
 		},
+		SignerList: []types.Signer{
+			{
+				Id: 0,
+			},
+			{
+				Id: 1,
+			},
+		},
+		SignerCount: 2,
 		// this line is used by starport scaffolding # genesis/test/state
 	}
 
@@ -54,5 +63,7 @@ func TestGenesis(t *testing.T) {
 	require.Equal(t, genesisState.CallerCount, got.CallerCount)
 	require.ElementsMatch(t, genesisState.DepositList, got.DepositList)
 	require.ElementsMatch(t, genesisState.WithdrawList, got.WithdrawList)
+	require.ElementsMatch(t, genesisState.SignerList, got.SignerList)
+	require.Equal(t, genesisState.SignerCount, got.SignerCount)
 	// this line is used by starport scaffolding # genesis/test/assert
 }

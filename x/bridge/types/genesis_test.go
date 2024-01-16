@@ -47,6 +47,15 @@ func TestGenesisState_Validate(t *testing.T) {
 						Index: "1",
 					},
 				},
+				SignerList: []types.Signer{
+					{
+						Id: 0,
+					},
+					{
+						Id: 1,
+					},
+				},
+				SignerCount: 2,
 				// this line is used by starport scaffolding # types/genesis/validField
 			},
 			valid: true,
@@ -102,6 +111,32 @@ func TestGenesisState_Validate(t *testing.T) {
 						Index: "0",
 					},
 				},
+			},
+			valid: false,
+		},
+		{
+			desc: "duplicated signer",
+			genState: &types.GenesisState{
+				SignerList: []types.Signer{
+					{
+						Id: 0,
+					},
+					{
+						Id: 0,
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "invalid signer count",
+			genState: &types.GenesisState{
+				SignerList: []types.Signer{
+					{
+						Id: 1,
+					},
+				},
+				SignerCount: 0,
 			},
 			valid: false,
 		},

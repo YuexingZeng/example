@@ -7,6 +7,7 @@ import "zyx/bridge/params.proto";
 import "zyx/bridge/caller.proto";
 import "zyx/bridge/deposit.proto";
 import "zyx/bridge/withdraw.proto";
+import "zyx/bridge/signer.proto";
 
 option go_package = "zyx/x/bridge/types";
 
@@ -17,5 +18,7 @@ message GenesisState {
            uint64   callerCount  = 3;
   repeated Deposit  depositList  = 4 [(gogoproto.nullable) = false];
   repeated Withdraw withdrawList = 5 [(gogoproto.nullable) = false];
+  repeated Signer   signerList   = 6 [(gogoproto.nullable) = false];
+           uint64   signerCount  = 7;
 }
 

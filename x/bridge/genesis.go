@@ -23,6 +23,13 @@ func InitGenesis(ctx sdk.Context, k keeper.Keeper, genState types.GenesisState) 
 	for _, elem := range genState.WithdrawList {
 		k.SetWithdraw(ctx, elem)
 	}
+	// Set all the signer
+	for _, elem := range genState.SignerList {
+		k.SetSigner(ctx, elem)
+	}
+
+	// Set signer count
+	k.SetSignerCount(ctx, genState.SignerCount)
 	// this line is used by starport scaffolding # genesis/module/init
 	k.SetParams(ctx, genState.Params)
 }
@@ -36,6 +43,8 @@ func ExportGenesis(ctx sdk.Context, k keeper.Keeper) *types.GenesisState {
 	genesis.CallerCount = k.GetCallerCount(ctx)
 	genesis.DepositList = k.GetAllDeposit(ctx)
 	genesis.WithdrawList = k.GetAllWithdraw(ctx)
+	genesis.SignerList = k.GetAllSigner(ctx)
+	genesis.SignerCount = k.GetSignerCount(ctx)
 	// this line is used by starport scaffolding # genesis/module/export
 
 	return genesis

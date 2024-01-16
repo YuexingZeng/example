@@ -60,6 +60,18 @@ const (
 	// TODO: Determine the simulation weight value
 	defaultWeightMsgDeleteWithdraw int = 100
 
+	opWeightMsgCreateSigner = "op_weight_msg_signer"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgCreateSigner int = 100
+
+	opWeightMsgUpdateSigner = "op_weight_msg_signer"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgUpdateSigner int = 100
+
+	opWeightMsgDeleteSigner = "op_weight_msg_signer"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgDeleteSigner int = 100
+
 	// this line is used by starport scaffolding # simapp/module/const
 )
 
@@ -102,6 +114,17 @@ func (AppModule) GenerateGenesisState(simState *module.SimulationState) {
 				Index:   "1",
 			},
 		},
+		SignerList: []types.Signer{
+			{
+				Id:      0,
+				Creator: sample.AccAddress(),
+			},
+			{
+				Id:      1,
+				Creator: sample.AccAddress(),
+			},
+		},
+		SignerCount: 2,
 		// this line is used by starport scaffolding # simapp/module/genesisState
 	}
 	simState.GenState[types.ModuleName] = simState.Cdc.MustMarshalJSON(&bridgeGenesis)
@@ -222,6 +245,39 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 	operations = append(operations, simulation.NewWeightedOperation(
 		weightMsgDeleteWithdraw,
 		bridgesimulation.SimulateMsgDeleteWithdraw(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgCreateSigner int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgCreateSigner, &weightMsgCreateSigner, nil,
+		func(_ *rand.Rand) {
+			weightMsgCreateSigner = defaultWeightMsgCreateSigner
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgCreateSigner,
+		bridgesimulation.SimulateMsgCreateSigner(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgUpdateSigner int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgUpdateSigner, &weightMsgUpdateSigner, nil,
+		func(_ *rand.Rand) {
+			weightMsgUpdateSigner = defaultWeightMsgUpdateSigner
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgUpdateSigner,
+		bridgesimulation.SimulateMsgUpdateSigner(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgDeleteSigner int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgDeleteSigner, &weightMsgDeleteSigner, nil,
+		func(_ *rand.Rand) {
+			weightMsgDeleteSigner = defaultWeightMsgDeleteSigner
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgDeleteSigner,
+		bridgesimulation.SimulateMsgDeleteSigner(am.accountKeeper, am.bankKeeper, am.keeper),
 	))
 
 	// this line is used by starport scaffolding # simapp/module/operation

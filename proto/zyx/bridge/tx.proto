@@ -5,6 +5,7 @@ package zyx.bridge;
 import "zyx/bridge/caller.proto";
 import "zyx/bridge/deposit.proto";
 import "zyx/bridge/withdraw.proto";
+import "zyx/bridge/signer.proto";
 
 option go_package = "zyx/x/bridge/types";
 
@@ -19,6 +20,9 @@ service Msg {
   rpc CreateWithdraw (MsgCreateWithdraw) returns (MsgCreateWithdrawResponse);
   rpc UpdateWithdraw (MsgUpdateWithdraw) returns (MsgUpdateWithdrawResponse);
   rpc DeleteWithdraw (MsgDeleteWithdraw) returns (MsgDeleteWithdrawResponse);
+  rpc CreateSigner   (MsgCreateSigner  ) returns (MsgCreateSignerResponse  );
+  rpc UpdateSigner   (MsgUpdateSigner  ) returns (MsgUpdateSignerResponse  );
+  rpc DeleteSigner   (MsgDeleteSigner  ) returns (MsgDeleteSignerResponse  );
 }
 message MsgCreateCaller {
   string creator = 1;
@@ -113,4 +117,30 @@ message MsgDeleteWithdraw {
 }
 
 message MsgDeleteWithdrawResponse {}
+
+message MsgCreateSigner {
+  string creator = 1;
+  string address = 2;
+  string name    = 3;
+}
+
+message MsgCreateSignerResponse {
+  uint64 id = 1;
+}
+
+message MsgUpdateSigner {
+  string creator = 1;
+  uint64 id      = 2;
+  string address = 3;
+  string name    = 4;
+}
+
+message MsgUpdateSignerResponse {}
+
+message MsgDeleteSigner {
+  string creator = 1;
+  uint64 id      = 2;
+}
+
+message MsgDeleteSignerResponse {}
 

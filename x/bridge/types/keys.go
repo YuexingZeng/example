@@ -22,3 +22,8 @@ const (
 	CallerKey      = "Caller/value/"
 	CallerCountKey = "Caller/count/"
 )
+
+const (
+	SignerKey      = "Signer/value/"
+	SignerCountKey = "Signer/count/"
+)
