@@ -8,6 +8,7 @@ import "cosmos/base/query/v1beta1/pagination.proto";
 import "zyx/test/params.proto";
 import "zyx/test/deposit.proto";
 import "zyx/test/withdraw.proto";
+import "zyx/test/caller_group.proto";
 
 option go_package = "zyx/x/test/types";
 
@@ -37,6 +38,16 @@ service Query {
   }
   rpc WithdrawAll (QueryAllWithdrawRequest) returns (QueryAllWithdrawResponse) {
     option (google.api.http).get = "/zyx/test/withdraw";
+  
+  }
+  
+  // Queries a list of CallerGroup items.
+  rpc CallerGroup    (QueryGetCallerGroupRequest) returns (QueryGetCallerGroupResponse) {
+    option (google.api.http).get = "/zyx/test/caller_group/{name}";
+  
+  }
+  rpc CallerGroupAll (QueryAllCallerGroupRequest) returns (QueryAllCallerGroupResponse) {
+    option (google.api.http).get = "/zyx/test/caller_group";
   
   }
 }
@@ -82,5 +93,22 @@ message QueryAllWithdrawRequest {
 message QueryAllWithdrawResponse {
   repeated Withdraw                               withdraw   = 1 [(gogoproto.nullable) = false];
            cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetCallerGroupRequest {
+  string name = 1;
+}
+
+message QueryGetCallerGroupResponse {
+  CallerGroup callerGroup = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllCallerGroupRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllCallerGroupResponse {
+  repeated CallerGroup                            callerGroup = 1 [(gogoproto.nullable) = false];
+           cosmos.base.query.v1beta1.PageResponse pagination  = 2;
 }
 

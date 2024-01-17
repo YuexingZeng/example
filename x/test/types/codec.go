@@ -14,6 +14,9 @@ func RegisterCodec(cdc *codec.LegacyAmino) {
 	cdc.RegisterConcrete(&MsgCreateWithdraw{}, "test/CreateWithdraw", nil)
 	cdc.RegisterConcrete(&MsgUpdateWithdraw{}, "test/UpdateWithdraw", nil)
 	cdc.RegisterConcrete(&MsgDeleteWithdraw{}, "test/DeleteWithdraw", nil)
+	cdc.RegisterConcrete(&MsgCreateCallerGroup{}, "test/CreateCallerGroup", nil)
+	cdc.RegisterConcrete(&MsgUpdateCallerGroup{}, "test/UpdateCallerGroup", nil)
+	cdc.RegisterConcrete(&MsgDeleteCallerGroup{}, "test/DeleteCallerGroup", nil)
 	// this line is used by starport scaffolding # 2
 }
 
@@ -27,6 +30,11 @@ func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
 		&MsgCreateWithdraw{},
 		&MsgUpdateWithdraw{},
 		&MsgDeleteWithdraw{},
+	)
+	registry.RegisterImplementations((*sdk.Msg)(nil),
+		&MsgCreateCallerGroup{},
+		&MsgUpdateCallerGroup{},
+		&MsgDeleteCallerGroup{},
 	)
 	// this line is used by starport scaffolding # 3
 

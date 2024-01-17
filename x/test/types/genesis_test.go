@@ -38,6 +38,14 @@ func TestGenesisState_Validate(t *testing.T) {
 						TxHash: "1",
 					},
 				},
+				CallerGroupList: []types.CallerGroup{
+					{
+						Name: "0",
+					},
+					{
+						Name: "1",
+					},
+				},
 				// this line is used by starport scaffolding # types/genesis/validField
 			},
 			valid: true,
@@ -65,6 +73,20 @@ func TestGenesisState_Validate(t *testing.T) {
 					},
 					{
 						TxHash: "0",
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "duplicated callerGroup",
+			genState: &types.GenesisState{
+				CallerGroupList: []types.CallerGroup{
+					{
+						Name: "0",
+					},
+					{
+						Name: "0",
 					},
 				},
 			},

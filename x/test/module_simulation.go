@@ -48,6 +48,18 @@ const (
 	// TODO: Determine the simulation weight value
 	defaultWeightMsgDeleteWithdraw int = 100
 
+	opWeightMsgCreateCallerGroup = "op_weight_msg_caller_group"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgCreateCallerGroup int = 100
+
+	opWeightMsgUpdateCallerGroup = "op_weight_msg_caller_group"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgUpdateCallerGroup int = 100
+
+	opWeightMsgDeleteCallerGroup = "op_weight_msg_caller_group"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgDeleteCallerGroup int = 100
+
 	// this line is used by starport scaffolding # simapp/module/const
 )
 
@@ -77,6 +89,16 @@ func (AppModule) GenerateGenesisState(simState *module.SimulationState) {
 			{
 				Creator: sample.AccAddress(),
 				TxHash:  "1",
+			},
+		},
+		CallerGroupList: []types.CallerGroup{
+			{
+				Creator: sample.AccAddress(),
+				Name:    "0",
+			},
+			{
+				Creator: sample.AccAddress(),
+				Name:    "1",
 			},
 		},
 		// this line is used by starport scaffolding # simapp/module/genesisState
@@ -166,6 +188,39 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 	operations = append(operations, simulation.NewWeightedOperation(
 		weightMsgDeleteWithdraw,
 		testsimulation.SimulateMsgDeleteWithdraw(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgCreateCallerGroup int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgCreateCallerGroup, &weightMsgCreateCallerGroup, nil,
+		func(_ *rand.Rand) {
+			weightMsgCreateCallerGroup = defaultWeightMsgCreateCallerGroup
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgCreateCallerGroup,
+		testsimulation.SimulateMsgCreateCallerGroup(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgUpdateCallerGroup int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgUpdateCallerGroup, &weightMsgUpdateCallerGroup, nil,
+		func(_ *rand.Rand) {
+			weightMsgUpdateCallerGroup = defaultWeightMsgUpdateCallerGroup
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgUpdateCallerGroup,
+		testsimulation.SimulateMsgUpdateCallerGroup(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgDeleteCallerGroup int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgDeleteCallerGroup, &weightMsgDeleteCallerGroup, nil,
+		func(_ *rand.Rand) {
+			weightMsgDeleteCallerGroup = defaultWeightMsgDeleteCallerGroup
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgDeleteCallerGroup,
+		testsimulation.SimulateMsgDeleteCallerGroup(am.accountKeeper, am.bankKeeper, am.keeper),
 	))
 
 	// this line is used by starport scaffolding # simapp/module/operation
