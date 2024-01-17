@@ -5,6 +5,7 @@ package zyx.test;
 import "zyx/test/deposit.proto";
 import "zyx/test/withdraw.proto";
 import "zyx/test/caller_group.proto";
+import "zyx/test/signer_group.proto";
 
 option go_package = "zyx/x/test/types";
 
@@ -19,6 +20,9 @@ service Msg {
   rpc CreateCallerGroup (MsgCreateCallerGroup) returns (MsgCreateCallerGroupResponse);
   rpc UpdateCallerGroup (MsgUpdateCallerGroup) returns (MsgUpdateCallerGroupResponse);
   rpc DeleteCallerGroup (MsgDeleteCallerGroup) returns (MsgDeleteCallerGroupResponse);
+  rpc CreateSignerGroup (MsgCreateSignerGroup) returns (MsgCreateSignerGroupResponse);
+  rpc UpdateSignerGroup (MsgUpdateSignerGroup) returns (MsgUpdateSignerGroupResponse);
+  rpc DeleteSignerGroup (MsgDeleteSignerGroup) returns (MsgDeleteSignerGroupResponse);
 }
 message MsgCreateDeposit {
   string creator  = 1;
@@ -112,4 +116,29 @@ message MsgDeleteCallerGroup {
 }
 
 message MsgDeleteCallerGroupResponse {}
+
+message MsgCreateSignerGroup {
+           string creator = 1;
+           string name    = 2;
+           string admin   = 3;
+  repeated string members = 4;
+}
+
+message MsgCreateSignerGroupResponse {}
+
+message MsgUpdateSignerGroup {
+           string creator = 1;
+           string name    = 2;
+           string admin   = 3;
+  repeated string members = 4;
+}
+
+message MsgUpdateSignerGroupResponse {}
+
+message MsgDeleteSignerGroup {
+  string creator = 1;
+  string name    = 2;
+}
+
+message MsgDeleteSignerGroupResponse {}
 

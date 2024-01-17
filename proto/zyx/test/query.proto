@@ -9,6 +9,7 @@ import "zyx/test/params.proto";
 import "zyx/test/deposit.proto";
 import "zyx/test/withdraw.proto";
 import "zyx/test/caller_group.proto";
+import "zyx/test/signer_group.proto";
 
 option go_package = "zyx/x/test/types";
 
@@ -48,6 +49,16 @@ service Query {
   }
   rpc CallerGroupAll (QueryAllCallerGroupRequest) returns (QueryAllCallerGroupResponse) {
     option (google.api.http).get = "/zyx/test/caller_group";
+  
+  }
+  
+  // Queries a list of SignerGroup items.
+  rpc SignerGroup    (QueryGetSignerGroupRequest) returns (QueryGetSignerGroupResponse) {
+    option (google.api.http).get = "/zyx/test/signer_group/{name}";
+  
+  }
+  rpc SignerGroupAll (QueryAllSignerGroupRequest) returns (QueryAllSignerGroupResponse) {
+    option (google.api.http).get = "/zyx/test/signer_group";
   
   }
 }
@@ -109,6 +120,23 @@ message QueryAllCallerGroupRequest {
 
 message QueryAllCallerGroupResponse {
   repeated CallerGroup                            callerGroup = 1 [(gogoproto.nullable) = false];
+           cosmos.base.query.v1beta1.PageResponse pagination  = 2;
+}
+
+message QueryGetSignerGroupRequest {
+  string name = 1;
+}
+
+message QueryGetSignerGroupResponse {
+  SignerGroup signerGroup = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllSignerGroupRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllSignerGroupResponse {
+  repeated SignerGroup                            signerGroup = 1 [(gogoproto.nullable) = false];
            cosmos.base.query.v1beta1.PageResponse pagination  = 2;
 }
 

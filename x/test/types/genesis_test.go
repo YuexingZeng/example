@@ -46,6 +46,14 @@ func TestGenesisState_Validate(t *testing.T) {
 						Name: "1",
 					},
 				},
+				SignerGroupList: []types.SignerGroup{
+					{
+						Name: "0",
+					},
+					{
+						Name: "1",
+					},
+				},
 				// this line is used by starport scaffolding # types/genesis/validField
 			},
 			valid: true,
@@ -82,6 +90,20 @@ func TestGenesisState_Validate(t *testing.T) {
 			desc: "duplicated callerGroup",
 			genState: &types.GenesisState{
 				CallerGroupList: []types.CallerGroup{
+					{
+						Name: "0",
+					},
+					{
+						Name: "0",
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "duplicated signerGroup",
+			genState: &types.GenesisState{
+				SignerGroupList: []types.SignerGroup{
 					{
 						Name: "0",
 					},

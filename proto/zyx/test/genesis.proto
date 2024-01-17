@@ -7,6 +7,7 @@ import "zyx/test/params.proto";
 import "zyx/test/deposit.proto";
 import "zyx/test/withdraw.proto";
 import "zyx/test/caller_group.proto";
+import "zyx/test/signer_group.proto";
 
 option go_package = "zyx/x/test/types";
 
@@ -16,5 +17,6 @@ message GenesisState {
   repeated Deposit     depositList     = 2 [(gogoproto.nullable) = false];
   repeated Withdraw    withdrawList    = 3 [(gogoproto.nullable) = false];
   repeated CallerGroup callerGroupList = 4 [(gogoproto.nullable) = false];
+  repeated SignerGroup signerGroupList = 5 [(gogoproto.nullable) = false];
 }
 

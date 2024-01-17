@@ -1,0 +1,12 @@
+syntax = "proto3";
+package zyx.test;
+
+option go_package = "zyx/x/test/types";
+
+message SignerGroup {
+  string name = 1; 
+  string admin = 2; 
+  repeated string members = 3; 
+  string creator = 4;
+}
+

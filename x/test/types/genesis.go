@@ -13,6 +13,7 @@ func DefaultGenesis() *GenesisState {
 		DepositList:     []Deposit{},
 		WithdrawList:    []Withdraw{},
 		CallerGroupList: []CallerGroup{},
+		SignerGroupList: []SignerGroup{},
 		// this line is used by starport scaffolding # genesis/types/default
 		Params: DefaultParams(),
 	}
@@ -50,6 +51,16 @@ func (gs GenesisState) Validate() error {
 			return fmt.Errorf("duplicated index for callerGroup")
 		}
 		callerGroupIndexMap[index] = struct{}{}
+	}
+	// Check for duplicated index in signerGroup
+	signerGroupIndexMap := make(map[string]struct{})
+
+	for _, elem := range gs.SignerGroupList {
+		index := string(SignerGroupKey(elem.Name))
+		if _, ok := signerGroupIndexMap[index]; ok {
+			return fmt.Errorf("duplicated index for signerGroup")
+		}
+		signerGroupIndexMap[index] = struct{}{}
 	}
 	// this line is used by starport scaffolding # genesis/types/validate
 
