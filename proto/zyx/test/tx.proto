@@ -3,14 +3,18 @@ syntax = "proto3";
 package zyx.test;
 
 import "zyx/test/deposit.proto";
+import "zyx/test/withdraw.proto";
 
 option go_package = "zyx/x/test/types";
 
 // Msg defines the Msg service.
 service Msg {
-  rpc CreateDeposit (MsgCreateDeposit) returns (MsgCreateDepositResponse);
-  rpc UpdateDeposit (MsgUpdateDeposit) returns (MsgUpdateDepositResponse);
-  rpc DeleteDeposit (MsgDeleteDeposit) returns (MsgDeleteDepositResponse);
+  rpc CreateDeposit  (MsgCreateDeposit ) returns (MsgCreateDepositResponse );
+  rpc UpdateDeposit  (MsgUpdateDeposit ) returns (MsgUpdateDepositResponse );
+  rpc DeleteDeposit  (MsgDeleteDeposit ) returns (MsgDeleteDepositResponse );
+  rpc CreateWithdraw (MsgCreateWithdraw) returns (MsgCreateWithdrawResponse);
+  rpc UpdateWithdraw (MsgUpdateWithdraw) returns (MsgUpdateWithdrawResponse);
+  rpc DeleteWithdraw (MsgDeleteWithdraw) returns (MsgDeleteWithdrawResponse);
 }
 message MsgCreateDeposit {
   string creator  = 1;
@@ -44,4 +48,39 @@ message MsgDeleteDeposit {
 }
 
 message MsgDeleteDepositResponse {}
+
+message MsgCreateWithdraw {
+           string creator    = 1;
+           string txHash     = 2;
+           string from       = 3;
+           string to         = 4;
+           string coinType   = 5;
+           uint64 value      = 6;
+           string data       = 7;
+           string status     = 8;
+  repeated string signatures = 9;
+}
+
+message MsgCreateWithdrawResponse {}
+
+message MsgUpdateWithdraw {
+           string creator    = 1;
+           string txHash     = 2;
+           string from       = 3;
+           string to         = 4;
+           string coinType   = 5;
+           uint64 value      = 6;
+           string data       = 7;
+           string status     = 8;
+  repeated string signatures = 9;
+}
+
+message MsgUpdateWithdrawResponse {}
+
+message MsgDeleteWithdraw {
+  string creator = 1;
+  string txHash  = 2;
+}
+
+message MsgDeleteWithdrawResponse {}
 

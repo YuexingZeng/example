@@ -30,6 +30,14 @@ func TestGenesisState_Validate(t *testing.T) {
 						TxHash: "1",
 					},
 				},
+				WithdrawList: []types.Withdraw{
+					{
+						TxHash: "0",
+					},
+					{
+						TxHash: "1",
+					},
+				},
 				// this line is used by starport scaffolding # types/genesis/validField
 			},
 			valid: true,
@@ -38,6 +46,20 @@ func TestGenesisState_Validate(t *testing.T) {
 			desc: "duplicated deposit",
 			genState: &types.GenesisState{
 				DepositList: []types.Deposit{
+					{
+						TxHash: "0",
+					},
+					{
+						TxHash: "0",
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "duplicated withdraw",
+			genState: &types.GenesisState{
+				WithdrawList: []types.Withdraw{
 					{
 						TxHash: "0",
 					},

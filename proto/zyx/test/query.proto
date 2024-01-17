@@ -7,6 +7,7 @@ import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
 import "zyx/test/params.proto";
 import "zyx/test/deposit.proto";
+import "zyx/test/withdraw.proto";
 
 option go_package = "zyx/x/test/types";
 
@@ -26,6 +27,16 @@ service Query {
   }
   rpc DepositAll (QueryAllDepositRequest) returns (QueryAllDepositResponse) {
     option (google.api.http).get = "/zyx/test/deposit";
+  
+  }
+  
+  // Queries a list of Withdraw items.
+  rpc Withdraw    (QueryGetWithdrawRequest) returns (QueryGetWithdrawResponse) {
+    option (google.api.http).get = "/zyx/test/withdraw/{txHash}";
+  
+  }
+  rpc WithdrawAll (QueryAllWithdrawRequest) returns (QueryAllWithdrawResponse) {
+    option (google.api.http).get = "/zyx/test/withdraw";
   
   }
 }
@@ -53,6 +64,23 @@ message QueryAllDepositRequest {
 
 message QueryAllDepositResponse {
   repeated Deposit                                deposit    = 1 [(gogoproto.nullable) = false];
+           cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetWithdrawRequest {
+  string txHash = 1;
+}
+
+message QueryGetWithdrawResponse {
+  Withdraw withdraw = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllWithdrawRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllWithdrawResponse {
+  repeated Withdraw                               withdraw   = 1 [(gogoproto.nullable) = false];
            cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 

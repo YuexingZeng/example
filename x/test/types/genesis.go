@@ -10,7 +10,8 @@ const DefaultIndex uint64 = 1
 // DefaultGenesis returns the default genesis state
 func DefaultGenesis() *GenesisState {
 	return &GenesisState{
-		DepositList: []Deposit{},
+		DepositList:  []Deposit{},
+		WithdrawList: []Withdraw{},
 		// this line is used by starport scaffolding # genesis/types/default
 		Params: DefaultParams(),
 	}
@@ -28,6 +29,16 @@ func (gs GenesisState) Validate() error {
 			return fmt.Errorf("duplicated index for deposit")
 		}
 		depositIndexMap[index] = struct{}{}
+	}
+	// Check for duplicated index in withdraw
+	withdrawIndexMap := make(map[string]struct{})
+
+	for _, elem := range gs.WithdrawList {
+		index := string(WithdrawKey(elem.TxHash))
+		if _, ok := withdrawIndexMap[index]; ok {
+			return fmt.Errorf("duplicated index for withdraw")
+		}
+		withdrawIndexMap[index] = struct{}{}
 	}
 	// this line is used by starport scaffolding # genesis/types/validate
 

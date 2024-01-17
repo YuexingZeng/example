@@ -22,6 +22,14 @@ func TestGenesis(t *testing.T) {
 				TxHash: "1",
 			},
 		},
+		WithdrawList: []types.Withdraw{
+			{
+				TxHash: "0",
+			},
+			{
+				TxHash: "1",
+			},
+		},
 		// this line is used by starport scaffolding # genesis/test/state
 	}
 
@@ -34,5 +42,6 @@ func TestGenesis(t *testing.T) {
 	nullify.Fill(got)
 
 	require.ElementsMatch(t, genesisState.DepositList, got.DepositList)
+	require.ElementsMatch(t, genesisState.WithdrawList, got.WithdrawList)
 	// this line is used by starport scaffolding # genesis/test/assert
 }
